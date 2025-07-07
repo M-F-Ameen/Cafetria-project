@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاصناف | Meal master</title>
+    <link rel="stylesheet" href="styles odoo/oddo-main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles odoo/notification.css">
+    <link rel="stylesheet" href="styles odoo/common.css">
+    <style>
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 2.5rem 2rem 2rem 2rem;
+      border-radius: 18px;
+      min-width: 340px;
+      max-width: 95vw;
+      box-shadow: 0 8px 32px rgba(60, 60, 120, 0.18), 0 1.5px 6px rgba(0,0,0,0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      animation: modalPop 0.25s cubic-bezier(.4,1.6,.6,1) 1;
+    }
+    @keyframes modalPop {
+      0% { transform: scale(0.95) translateY(30px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .modal-content h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      color: #6c3483;
+      text-align: center;
+      font-weight: 700;
+    }
+    .modal-content label {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 0.2rem;
+      font-weight: 500;
+    }
+    .modal-content input,
+    .modal-content select {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 7px;
+      font-size: 1rem;
+      margin-bottom: 0.7rem;
+      background: #faf9fd;
+      transition: border 0.2s;
+    }
+    .modal-content input:focus,
+    .modal-content select:focus {
+      border: 1.5px solid #a569bd;
+      outline: none;
+      background: #fff;
+    }
+    .modal-content button[type="submit"] {
+      width: 100%;
+      padding: 0.7rem 0;
+      background: #4d3245;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      box-shadow: 0 2px 8px rgba(166,105,189,0.08);
+      transition: background 0.2s;
+    }
+    .modal-content button[type="submit"]:hover {
+      background: #382533;
+    }
+    .close {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 1.7rem;
+      color: #a569bd;
+      background: #f3e6fa;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, color 0.2s;
+      z-index: 2;
+    }
+    .close:hover {
+      background: #a569bd;
+      color: #fff;
+    }
+    .modal-content form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-right">
+            <div class="logo">
+                <img src="images/logo/Meal.png" alt="Logo" style="width: 200px; height: 50px;">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="بحث...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <span class="mark-all-read">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="notification-list">
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">طلب جديد</div>
+                                        <div class="notification-message">تم استلام طلب جديد من الطاولة رقم 5</div>
+                                        <div class="notification-time">منذ 5 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تنبيه مخزون</div>
+                                        <div class="notification-message">البيتزا وصلت للحد الأدنى من المخزون</div>
+                                        <div class="notification-time">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">موظف جديد</div>
+                                        <div class="notification-message">تم تسجيل موظف جديد في النظام</div>
+                                        <div class="notification-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تقرير المبيعات</div>
+                                        <div class="notification-message">تم إرسال تقرير المبيعات اليومية</div>
+                                        <div class="notification-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تحديث النظام</div>
+                                        <div class="notification-message">تم تحديث النظام بنجاح</div>
+                                        <div class="notification-time">منذ يوم</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-comments"></i>
+                    <div class="message-badge">2</div>
+                    <div class="message-dropdown">
+                        <div class="message-header">
+                            <h3>الرسائل</h3>
+                            <span class="mark-all-read-messages">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="message-list">
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">أحمد محمد</div>
+                                        <div class="message-preview">هل يمكنني طلب وجبة خاصة؟</div>
+                                        <div class="message-time">منذ 10 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">فاطمة علي</div>
+                                        <div class="message-preview">شكراً على الوجبة الممتازة</div>
+                                        <div class="message-time">منذ 30 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">محمد حسن</div>
+                                        <div class="message-preview">متى سيكون الطلب جاهز؟</div>
+                                        <div class="message-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">سارة أحمد</div>
+                                        <div class="message-preview">هل لديكم خيارات نباتية؟</div>
+                                        <div class="message-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <i class="fas fa-th"></i>
+            </div>
+            <div class="user-menu">
+                <span>المدير</span>
+                <img src="assets/imgs/customer01.jpg" alt="User" class="user-avatar" style="    border-radius: 5px !important; box-shadow: 2px 4px 10px rgb(190, 189, 189);">
+                <div class="dropdown-menu">
+                   
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        الإعدادات
+                    </a>
+                    <a href="index.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sidebar-menu">
+            <a href="admin.html" class="menu-item ">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>لوحه التحكم</span>
+            </a>
+                <a href="new-order.html" class="menu-item">
+                <i class="fas fa-plus-circle"></i>
+                <span>طلب جديد</span>
+            </a>
+            <a href="items.html" class="menu-item active">
+                <i class="fas fa-box"></i>
+                <span>الاصناف</span>
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>أدارة المستخدمين</span>
+            </a>
+
+            <a href="orders.html" class="menu-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>الطلبات والتحكم</span>
+            </a>
+
+
+            <a href="analytics.html" class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>التحليلات والتقارير</span>
+            </a>
+            <a href="#" class="menu-item has-submenu" id="cafetria-menu">
+                <i class="fas fa-utensils"></i>
+                <span>الكافتريا</span>
+            </a>
+            <div class="submenu" id="cafetria-submenu">
+                <a href="cafatria-staff-pages/cafateria-order-taker.html">
+                    <i class="fas fa-clipboard-list" style="color: rgba(133, 77, 186, 0.878);"></i>
+                    <span>استقبال الطلبات</span>
+                </a>
+                <a href="cafatria-staff-pages/completed-orders.html">
+                    <i class="fas fa-check-circle"  style="color: rgba(50, 142, 20, 0.744);"></i>
+                    <span>الطلبات المكتملة</span>
+                </a>
+                <a href="cafatria-staff-pages/cafeteria-cancelled-orders.html" style="width: 100%;">
+                    <i class="fas fa-times-circle" style="color: rgba(255, 0, 0, 0.744);"></i>
+                    <span>الطلبات الملغية</span>
+                </a>
+               <hr>
+            </div>
+            <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>الاعدادات</span>
+            </a>
+            <!-- <a href="change-password.html" class="menu-item">
+                <i class="fas fa-key"></i>
+                <span>كلمه المرور</span>
+            </a> -->
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل خروج</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- <div class="content-header">
+            <h1>الاصناف</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="openAddItemModal()">
+                    <i class="fas fa-plus"></i>
+                    إضافة صنف جديد
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-download"></i>
+                    تصدير البيانات
+                </button>
+            </div>
+        </div> -->
+
+        <!-- Filters and Search -->
+        <div class="filters-section">
+            <div class="search-filter">
+                <input type="text" placeholder="البحث في الأصناف..." class="search-input">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="drink">المشروبات</button>
+                <button class="filter-btn" data-filter="food">الأطعمة</button>
+                <button class="btn btn-primary" onclick="openAddItemModal()">
+                    <i class="fas fa-plus"></i>
+                    إضافة صنف جديد
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-download"></i>
+                    تصدير البيانات
+                </button>
+            </div>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="inventory-container">
+            <div class="table-responsive">
+                <table class="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>الصورة</th>
+                            <th>اسم الصنف</th>
+                            <th>النوع</th>
+                            <th>السعر</th>
+                            <th>الكمية المتوفرة</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/cola.jpg" alt="كولا" class="item-img">
+                            </td>
+                            <td class="item-name">كولا</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">8.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">120</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير برتقال" class="item-img">
+                            </td>
+                            <td class="item-name">عصير برتقال طازج</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">12.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">25</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/iced-tea.jpg" alt="شاي مثلج" class="item-img">
+                            </td>
+                            <td class="item-name">شاي مثلج</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">10.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge low">5</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge low-stock">كمية قليلة</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/tea.jpg" alt="شاي" class="item-img">
+                            </td>
+                            <td class="item-name">شاي أسود</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">6.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">80</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/soda.jpg" alt="صودا" class="item-img">
+                            </td>
+                            <td class="item-name">صودا</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">5.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">95</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/tea.jpg" alt="شاي بالنعناع" class="item-img">
+                            </td>
+                            <td class="item-name">شاي بالنعناع</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">7.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">35</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/tea.jpg" alt="شاي أخضر" class="item-img">
+                            </td>
+                            <td class="item-name">شاي أخضر</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">8.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">42</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير مانجو" class="item-img">
+                            </td>
+                            <td class="item-name">عصير مانجو طازج</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">15.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge low">8</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge low-stock">كمية قليلة</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير جوافة" class="item-img">
+                            </td>
+                            <td class="item-name">عصير جوافة طازج</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">13.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">18</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير ليمون" class="item-img">
+                            </td>
+                            <td class="item-name">عصير ليمون طازج</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">10.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">60</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/cola.jpg" alt="عصير تفاح" class="item-img">
+                            </td>
+                            <td class="item-name">عصير تفاح</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">11.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">22</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير أناناس" class="item-img">
+                            </td>
+                            <td class="item-name">عصير أناناس</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">14.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge high">40</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/iced-tea.jpg" alt="عصير فراولة" class="item-img">
+                            </td>
+                            <td class="item-name">عصير فراولة</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">13.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">19</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/soda.jpg" alt="عصير رمان" class="item-img">
+                            </td>
+                            <td class="item-name">عصير رمان</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">16.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge low">7</span></td>
+                            <td class="item-status"><span class="status-badge low-stock">كمية قليلة</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/tea.jpg" alt="عصير جزر" class="item-img">
+                            </td>
+                            <td class="item-name">عصير جزر</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">10.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">15</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير قصب" class="item-img">
+                            </td>
+                            <td class="item-name">عصير قصب</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">9.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge high">55</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/cola.jpg" alt="عصير توت" class="item-img">
+                            </td>
+                            <td class="item-name">عصير توت</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">15.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge low">4</span></td>
+                            <td class="item-status"><span class="status-badge low-stock">كمية قليلة</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/iced-tea.jpg" alt="عصير كيوي" class="item-img">
+                            </td>
+                            <td class="item-name">عصير كيوي</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">17.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">13</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/soda.jpg" alt="عصير خوخ" class="item-img">
+                            </td>
+                            <td class="item-name">عصير خوخ</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">12.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge high">38</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/tea.jpg" alt="عصير كمثرى" class="item-img">
+                            </td>
+                            <td class="item-name">عصير كمثرى</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">13.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">21</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير برقوق" class="item-img">
+                            </td>
+                            <td class="item-name">عصير برقوق</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">14.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge low">6</span></td>
+                            <td class="item-status"><span class="status-badge low-stock">كمية قليلة</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/cola.jpg" alt="عصير بطيخ" class="item-img">
+                            </td>
+                            <td class="item-name">عصير بطيخ</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">12.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge high">44</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/iced-tea.jpg" alt="عصير شمام" class="item-img">
+                            </td>
+                            <td class="item-name">عصير شمام</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">13.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">17</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/soda.jpg" alt="عصير جريب فروت" class="item-img">
+                            </td>
+                            <td class="item-name">عصير جريب فروت</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">15.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge low">9</span></td>
+                            <td class="item-status"><span class="status-badge low-stock">كمية قليلة</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/tea.jpg" alt="عصير ليمون نعناع" class="item-img">
+                            </td>
+                            <td class="item-name">عصير ليمون نعناع</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">12.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge high">32</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/orange-juice.jpg" alt="عصير مشمش" class="item-img">
+                            </td>
+                            <td class="item-name">عصير مشمش</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">14.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">20</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/cola.jpg" alt="عصير مانجو بالحليب" class="item-img">
+                            </td>
+                            <td class="item-name">عصير مانجو بالحليب</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">18.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge low">5</span></td>
+                            <td class="item-status"><span class="status-badge low-stock">كمية قليلة</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/iced-tea.jpg" alt="عصير موز بالحليب" class="item-img">
+                            </td>
+                            <td class="item-name">عصير موز بالحليب</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">17.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge medium">14</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/soda.jpg" alt="عصير أفوكادو" class="item-img">
+                            </td>
+                            <td class="item-name">عصير أفوكادو</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">20.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge low">3</span></td>
+                            <td class="item-status"><span class="status-badge low-stock">كمية قليلة</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="images/tea.jpg" alt="عصير كوكتيل فواكه" class="item-img">
+                            </td>
+                            <td class="item-name">عصير كوكتيل فواكه</td>
+                            <td class="item-type"><span class="type-badge drink">مشروب</span></td>
+                            <td class="item-price">19.00 جنيه</td>
+                            <td class="item-quantity"><span class="quantity-badge high">28</span></td>
+                            <td class="item-status"><span class="status-badge available">متوفر</span></td>
+                            <td class="item-actions"><button class="action-btn edit" title="تعديل"><i class="fas fa-edit"></i></button><button class="action-btn delete" title="حذف"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="pagination-btn" disabled>
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Add Item Modal -->
+    <div id="addItemModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeAddItemModal()">&times;</span>
+        <h2>إضافة صنف جديد</h2>
+        <form id="addItemForm">
+          <label>صورة الصنف:</label>
+          <input type="file" id="itemImage" accept="image/*">
+          <div id="imagePreview" style="display:none; margin-bottom: 0.7rem; text-align:center;"></div>
+          <label>اسم الصنف:</label>
+          <input type="text" id="itemName" required>
+          <label>النوع:</label>
+          <select id="itemType" required>
+            <option value="food">طعام</option>
+            <option value="drink">مشروب</option>
+          </select>
+          <label>السعر:</label>
+          <input type="number" id="itemPrice" required>
+          <label>الكمية:</label>
+          <input type="number" id="itemQuantity" required>
+          <button type="submit" class="btn btn-primary" style="    display: flex
+          ;
+              justify-content: center;">إضافة</button>
+        </form>
+      </div>
+    </div>
+    <script src="js/notification.js"></script>
+    <script src="js/items.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</body>
+</html> 

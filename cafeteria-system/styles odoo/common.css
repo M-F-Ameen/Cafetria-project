@@ -1,0 +1,55 @@
+  /* Cafetria submenu styles */
+  .submenu {
+    max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease;
+background: rgba(166, 197, 202, 0);
+margin-right: -1px;
+border-radius: 0px;
+}
+
+.submenu.active {
+    max-height: 200px;
+    max-height: 200px;
+
+display: flex
+;
+justify-content: center;
+align-items: start;
+flex-direction: column;
+}
+
+.submenu a {
+    padding: 10px 32px 9px 50px;
+    font-size: 14px;
+    color: #666;
+     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.submenu a:last-child {
+    border-bottom: none;
+}
+
+.submenu a:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.menu-item.has-submenu {
+    position: relative;
+}
+
+.menu-item.has-submenu::after {
+    content: '\f107';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.menu-item.has-submenu.active::after {
+    transform: translateY(-50%) rotate(180deg);
+}

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الطلبات والتحكم | Meal master</title>
+    <link rel="stylesheet" href="../styles odoo/oddo-main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles odoo/notification.css">
+    <link rel="stylesheet" href="../styles odoo/cafe-order-taker.css">
+    <link rel="stylesheet" href="../ChatBox/style.css">
+    <style>
+        /* Stopwatch styles */
+        #stopwatch-container {
+            display: flex
+;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    flex-direction: row-reverse;
+    gap: 10px;
+        }
+        #stopwatch {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            direction: ltr;
+        }
+        .stopwatch-btns button {
+            margin: 0 2px;
+            padding: 3px 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            background: #b0eaf6e7;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .stopwatch-btns button:hover {
+            background: #e0e0e0;
+        }
+        .header-center {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (max-width: 700px) {
+            #stopwatch-container { margin: 0 5px; }
+            #stopwatch { font-size: 1.1rem; }
+        }
+        .stopwatch-ms {
+            font-size: 0.6em;
+            font-weight: 400;
+            opacity: 0.7;
+            margin-right: 2px;
+            color: red;
+           
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-right">
+            <div class="logo">
+                <img src="../images/logo/Meal.png" alt="Logo" style="width: 200px; height: 50px;">
+            </div>
+            <!-- <div class="search-bar">
+                <input type="text" placeholder="بحث...">
+                <i class="fas fa-search"></i>
+            </div> -->
+        </div>
+        <!-- Stopwatch Center -->
+        <div class="header-center">
+            <div id="stopwatch-container">
+                <div class="stopwatch-btns">
+                   
+                    <button title="إعادة" onclick="resetStopwatch()"><i class="fas fa-rotate-left" style="color: purple;"></i></button>
+                </div>
+                <div id="stopwatch"><span id="stopwatch-main">00:00:00</span><span class="stopwatch-ms">.00</span></div>
+                <div class="stopwatch-btns">
+                    <button id="toggleStopwatchBtn" title="ابدأ" onclick="toggleStopwatch()"><i class="fas fa-play" style="color: purple;"></i></button>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <span class="mark-all-read">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="notification-list">
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">طلب جديد</div>
+                                        <div class="notification-message">تم استلام طلب جديد من الطاولة رقم 5</div>
+                                        <div class="notification-time">منذ 5 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تنبيه مخزون</div>
+                                        <div class="notification-message">البيتزا وصلت للحد الأدنى من المخزون</div>
+                                        <div class="notification-time">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">موظف جديد</div>
+                                        <div class="notification-message">تم تسجيل موظف جديد في النظام</div>
+                                        <div class="notification-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تقرير المبيعات</div>
+                                        <div class="notification-message">تم إرسال تقرير المبيعات اليومية</div>
+                                        <div class="notification-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تحديث النظام</div>
+                                        <div class="notification-message">تم تحديث النظام بنجاح</div>
+                                        <div class="notification-time">منذ يوم</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-comments"></i>
+                    <div class="message-badge">2</div>
+                    <div class="message-dropdown">
+                        <div class="message-header">
+                            <h3>الرسائل</h3>
+                            <span class="mark-all-read-messages">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="message-list">
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">أحمد محمد</div>
+                                        <div class="message-preview">هل يمكنني طلب وجبة خاصة؟</div>
+                                        <div class="message-time">منذ 10 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">فاطمة علي</div>
+                                        <div class="message-preview">شكراً على الوجبة الممتازة</div>
+                                        <div class="message-time">منذ 30 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">محمد حسن</div>
+                                        <div class="message-preview">متى سيكون الطلب جاهز؟</div>
+                                        <div class="message-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">سارة أحمد</div>
+                                        <div class="message-preview">هل لديكم خيارات نباتية؟</div>
+                                        <div class="message-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <i class="fas fa-th"></i>
+            </div>
+            <div class="user-menu">
+                <span>الكافتريا</span>
+                <img src="../assets/imgs/customer01.jpg" alt="User" class="user-avatar" style="    border-radius: 5px !important; box-shadow: 2px 4px 10px rgb(190, 189, 189);">
+                <div class="dropdown-menu">
+                  
+                    <a href="../index.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+ <!-- chat start -->
+ <div class="chat" style="display: none; z-index: 135346;">
+    <div class="chat-title">
+      <h1>Mohamed</h1>
+      <h2>Supah</h2>
+      <figure class="avatar">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
+    </div>
+    <div class="messages">
+      <div class="messages-content"></div>
+    </div>
+    <div class="message-box">
+      <textarea type="text" class="message-input" placeholder="اكتب شيئا...."></textarea>
+      <button type="submit" class="message-submit">ارسل</button>
+    </div>
+  
+  </div>
+  <div class="bg"></div>
+<!-- Floating Chat Icon -->
+<div id="floatingChatIcon" style="position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #602e9e; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
+    <i class="fas fa-comments" style="color: white; font-size: 21px;"></i>
+</div>
+<!-- End Floating Chat Icon -->
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sidebar-menu">
+        
+
+            <a href="" class="menu-item active">
+                <i class="fas fa-clipboard-list"></i>
+                <span>الطلبات والتحكم</span>
+            </a>
+            <a href="completed-orders.html" class="menu-item ">
+                <i class="fas fa-plus-circle"></i>
+                <span> الطلبات المكتمله</span>
+            </a>
+            <a href="cafeteria-cancelled-orders.html" class="menu-item ">
+                <i class="fas fa-times-circle"></i>
+                <span> الطلبات الملغيه</span>
+            </a>
+   
+            <a href="../index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل خروج</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        
+        <div class="orders-container">
+            <div class="orders-header">
+                <h2 style="padding-right: 30px;"> طلبات الموظفين</h2>
+                <div class="orders-filters">
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">جميع الحالات</option>
+                        <option value="pending">في الانتظار</option>
+                        <option value="preparing">قيد التحضير</option>
+                        <option value="ready">جاهز</option>
+                        <option value="delivered">تم التوصيل</option>
+                        <option value="cancelled">ملغي</option>
+                    </select>
+                    <input type="text" class="search-input" placeholder="بحث في الطلبات..." id="searchOrders">
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 180px;">العميل</th>
+                            <th style="width: 280px;">الطلب</th>
+                            <th>الكمية</th>
+                            <th>السعر</th>
+                            <th>تحصيل</th>
+                            <th>الوقت</th>
+                            <th>ملاحظات</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="../assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>أحمد محمد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 280px !important;">
+                                <div class="order-item" >
+                                    <img src="../images/pizza.jpg" alt="Pizza" class="order-image">
+                                    <div class="order-details">
+                                        <h4>بيتزا مارجريتا</h4>
+                                        <p>حجم كبير</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>45 جنيه</td>
+                            <td><span class="collection-badge collection-support">دعم</span></td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:30</div>
+                                    <div>منذ 15 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون جبنة إضافية</div>
+                            </td>
+                            <td>
+                                <select class="status-select pending" onchange="updateOrderStatus(1, this.value)">
+                                    <option value="pending" style="background:#fffbe6;color:#856404;" ${status === 'pending' ? 'selected' : ''}>في الانتظار</option>
+                                    <option value="preparing" style="background:#eaf6ff;color:#004085;" ${status === 'preparing' ? 'selected' : ''}>قيد التحضير</option>
+                                    <option value="ready" style="background:#eaffea;color:#155724;" ${status === 'ready' ? 'selected' : ''}>جاهز</option>
+                                    <option value="delivered" style="background:#eafcff;color:#0c5460;" ${status === 'delivered' ? 'selected' : ''}>تم التوصيل</option>
+                                    <option value="cancelled" style="background:#fff0f0;color:#721c24;" ${status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="../assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>فاطمة علي</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="../images/burger.jpg" alt="Burger" class="order-image">
+                                    <div class="order-details">
+                                        <h4>برجر دجاج</h4>
+                                        <p>مع بطاطس</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>25 جنيه</td>
+                            <td><span class="collection-badge collection-cash">كاش</span></td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:15</div>
+                                    <div>منذ 30 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون بصل</div>
+                            </td>
+                            <td>
+                                <select class="status-select ready" onchange="updateOrderStatus(2, this.value)">
+                                    <option value="pending" style="background:#fffbe6;color:#856404;" ${status === 'pending' ? 'selected' : ''}>في الانتظار</option>
+                                    <option value="preparing" style="background:#eaf6ff;color:#004085;" ${status === 'preparing' ? 'selected' : ''}>قيد التحضير</option>
+                                    <option value="ready" style="background:#eaffea;color:#155724;" ${status === 'ready' ? 'selected' : ''}>جاهز</option>
+                                    <option value="delivered" style="background:#eafcff;color:#0c5460;" ${status === 'delivered' ? 'selected' : ''}>تم التوصيل</option>
+                                    <option value="cancelled" style="background:#fff0f0;color:#721c24;" ${status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="../assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>محمد حسن</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="../images/pasta.jpg" alt="Pasta" class="order-image">
+                                    <div class="order-details">
+                                        <h4>باستا كاربونارا</h4>
+                                        <p>حجم متوسط</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>35 جنيه</td>
+                            <td><span class="collection-badge collection-support">دعم</span></td>
+                            <td>
+                                <div class="order-time">
+                                    <div>13:45</div>
+                                    <div>منذ ساعة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-comments">-</div>
+                            </td>
+                            <td>
+                                <select class="status-select delivered" onchange="updateOrderStatus(3, this.value)">
+                                    <option value="pending" style="background:#fffbe6;color:#856404;" ${status === 'pending' ? 'selected' : ''}>في الانتظار</option>
+                                    <option value="preparing" style="background:#eaf6ff;color:#004085;" ${status === 'preparing' ? 'selected' : ''}>قيد التحضير</option>
+                                    <option value="ready" style="background:#eaffea;color:#155724;" ${status === 'ready' ? 'selected' : ''}>جاهز</option>
+                                    <option value="delivered" style="background:#eafcff;color:#0c5460;" ${status === 'delivered' ? 'selected' : ''}>تم التوصيل</option>
+                                    <option value="cancelled" style="background:#fff0f0;color:#721c24;" ${status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="../assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>سارة أحمد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="../images/caesar-salad.jpg" alt="Salad" class="order-image">
+                                    <div class="order-details">
+                                        <h4>سلطة قيصر</h4>
+                                        <p>مع دجاج مشوي</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>30 جنيه</td>
+                            <td><span class="collection-badge collection-cash">كاش</span></td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:45</div>
+                                    <div>منذ 5 دقائق</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون جبنة بارميزان</div>
+                            </td>
+                            <td>
+                                <select class="status-select pending" onchange="updateOrderStatus(4, this.value)">
+                                    <option value="pending" style="background:#fffbe6;color:#856404;" ${status === 'pending' ? 'selected' : ''}>في الانتظار</option>
+                                    <option value="preparing" style="background:#eaf6ff;color:#004085;" ${status === 'preparing' ? 'selected' : ''}>قيد التحضير</option>
+                                    <option value="ready" style="background:#eaffea;color:#155724;" ${status === 'ready' ? 'selected' : ''}>جاهز</option>
+                                    <option value="delivered" style="background:#eafcff;color:#0c5460;" ${status === 'delivered' ? 'selected' : ''}>تم التوصيل</option>
+                                    <option value="cancelled" style="background:#fff0f0;color:#721c24;" ${status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="../assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>علي محمود</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="../images/beef-sandwich.jpg" alt="Sandwich" class="order-image">
+                                    <div class="order-details">
+                                        <h4>ساندويتش لحم بقري</h4>
+                                        <p>مع مشروب</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>40 جنيه</td>
+                            <td><span class="collection-badge collection-support">دعم</span></td>
+                            <td>
+                                <div class="order-time">
+                                    <div>12:30</div>
+                                    <div>منذ ساعتين</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-comments">تم الإلغاء من العميل</div>
+                            </td>
+                            <td>
+                                <select class="status-select cancelled" onchange="updateOrderStatus(5, this.value)">
+                                    <option value="pending" style="background:#fffbe6;color:#856404;" ${status === 'pending' ? 'selected' : ''}>في الانتظار</option>
+                                    <option value="preparing" style="background:#eaf6ff;color:#004085;" ${status === 'preparing' ? 'selected' : ''}>قيد التحضير</option>
+                                    <option value="ready" style="background:#eaffea;color:#155724;" ${status === 'ready' ? 'selected' : ''}>جاهز</option>
+                                    <option value="delivered" style="background:#eafcff;color:#0c5460;" ${status === 'delivered' ? 'selected' : ''}>تم التوصيل</option>
+                                    <option value="cancelled" style="background:#fff0f0;color:#721c24;" ${status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                                </select>
+                            </td>
+                        </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Hospitality Orders Table -->
+        <div class="orders-container">
+            <div class="orders-header">
+                <h2 style="padding-right: 30px;">طلبات الضيافه</h2>
+            </div>
+            <div class="table-responsive">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 180px;">العميل</th>
+                            <th style="width: 280px;">الطلب</th>
+                            <th>الكمية</th>
+                            <th>السعر</th>
+                            <th>تحصيل</th>
+                            <th>الوقت</th>
+                            <th>ملاحظات</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hospitalityOrdersTableBody">
+                        <!-- Hospitality orders will be rendered here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Completed Orders Dropdown Table -->
+      
+
+        <!-- Comment Modal -->
+        <div class="comment-modal" id="commentModal">
+            <div class="comment-modal-content">
+                <h3>إضافة ملاحظة للطلب</h3>
+                <textarea class="comment-textarea" id="commentText" placeholder="اكتب ملاحظتك هنا..."></textarea>
+                <div class="comment-modal-actions">
+                    <button class="modal-btn cancel-btn" onclick="closeCommentModal()">إلغاء</button>
+                    <button class="modal-btn save-btn" onclick="saveComment()">حفظ</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript for Orders Management -->
+ 
+<script src="../js/cafe-order-taker.js"></script>
+       <script src="../js/notification.js"></script>
+<script>
+// Stopwatch logic
+let stopwatchInterval;
+let elapsed = 0; // in milliseconds
+let running = false;
+
+function updateStopwatchDisplay() {
+    const totalSeconds = Math.floor(elapsed / 1000);
+    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+    const seconds = String(totalSeconds % 60).padStart(2, '0');
+    const ms = String(Math.floor((elapsed % 1000) / 10)).padStart(2, '0');
+    document.getElementById('stopwatch-main').textContent = `${hours}:${minutes}:${seconds}`;
+    document.querySelector('.stopwatch-ms').textContent = `.${ms}`;
+}
+
+function toggleStopwatch() {
+    if (running) {
+        stopStopwatch();
+    } else {
+        startStopwatch();
+    }
+    updateToggleButton();
+}
+
+function updateToggleButton() {
+    const btn = document.getElementById('toggleStopwatchBtn');
+    const icon = btn.querySelector('i');
+    if (running) {
+        btn.title = 'أوقف';
+        icon.className = 'fas fa-pause';
+    } else {
+        btn.title = 'ابدأ';
+        icon.className = 'fas fa-play';
+    }
+}
+
+function startStopwatch() {
+    if (running) return;
+    running = true;
+    stopwatchInterval = setInterval(() => {
+        elapsed += 10;
+        updateStopwatchDisplay();
+    }, 10);
+}
+
+function stopStopwatch() {
+    running = false;
+    clearInterval(stopwatchInterval);
+}
+
+function resetStopwatch() {
+    stopStopwatch();
+    elapsed = 0;
+    updateStopwatchDisplay();
+    updateToggleButton();
+}
+
+// Initialize display and button
+updateStopwatchDisplay();
+updateToggleButton();
+</script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script><script  src="./script.js">  
+ </script> 
+<script src="../ChatBox/script.js"></script>
+</body>
+</html> 

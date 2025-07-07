@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Master</title>
+    <link rel="stylesheet" href="styles odoo/oddo-main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles odoo/notification.css">
+    <link rel="stylesheet" href="styles odoo/common.css">
+<link rel="stylesheet" href="styles odoo/users.css">
+    
+    <style>
+    #pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        direction: ltr;
+    }
+    #pagination button {
+        background: #fff;
+        border: 1px solid #bdbdbd;
+        color: #6c3483;
+        padding: 6px 14px;
+        margin: 0 2px;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s, border 0.2s;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    #pagination button[disabled] {
+        background: #f3f3f3;
+        color: #bdbdbd;
+        border: 1px solid #e0e0e0;
+        cursor: not-allowed;
+    }
+    #pagination button[style*="font-weight: bold"] {
+        background: #6c3483;
+        color: #fff;
+        border: 1px solid #6c3483;
+        font-weight: bold;
+        box-shadow: 0 2px 8px rgba(108,52,131,0.08);
+    }
+    #pagination button:hover:not([disabled]):not([style*="font-weight: bold"]) {
+        background: #f5eef8;
+        color: #512e5f;
+        border: 1px solid #a569bd;
+    }
+    </style>
+</head>
+<body>
+    <!-- Add Modal HTML --> 
+    <div id="addUserModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة مستخدم جديد</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label for="userName">الاسم</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-group">
+                    <label for="userRoleType">الدور</label>
+                    <select id="userRoleType" required>
+                        <option value="">اختر الدور</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Employee">Employee</option>
+                        <option value="Cafeteria">Cafeteria</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="userRole">الوظيفة</label>
+                    <input type="text" id="userRole" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="userImage">صورة المستخدم</label>
+                    <input type="file" id="userImage" accept="image/*">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel">إلغاء</button>
+                    <button type="submit" class="btn-save">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-right">
+            <div class="logo">
+                <img src="images/logo/Meal.png" alt="Logo" style="width: 200px; height: 50px;">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="بحث...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <span class="mark-all-read">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="notification-list">
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">طلب جديد</div>
+                                        <div class="notification-message">تم استلام طلب جديد من الطاولة رقم 5</div>
+                                        <div class="notification-time">منذ 5 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تنبيه مخزون</div>
+                                        <div class="notification-message">البيتزا وصلت للحد الأدنى من المخزون</div>
+                                        <div class="notification-time">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">موظف جديد</div>
+                                        <div class="notification-message">تم تسجيل موظف جديد في النظام</div>
+                                        <div class="notification-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تقرير المبيعات</div>
+                                        <div class="notification-message">تم إرسال تقرير المبيعات اليومية</div>
+                                        <div class="notification-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تحديث النظام</div>
+                                        <div class="notification-message">تم تحديث النظام بنجاح</div>
+                                        <div class="notification-time">منذ يوم</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-comments"></i>
+                    <div class="message-badge">2</div>
+                    <div class="message-dropdown">
+                        <div class="message-header">
+                            <h3>الرسائل</h3>
+                            <span class="mark-all-read-messages">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="message-list">
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">أحمد محمد</div>
+                                        <div class="message-preview">هل يمكنني طلب وجبة خاصة؟</div>
+                                        <div class="message-time">منذ 10 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">فاطمة علي</div>
+                                        <div class="message-preview">شكراً على الوجبة الممتازة</div>
+                                        <div class="message-time">منذ 30 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">محمد حسن</div>
+                                        <div class="message-preview">متى سيكون الطلب جاهز؟</div>
+                                        <div class="message-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">سارة أحمد</div>
+                                        <div class="message-preview">هل لديكم خيارات نباتية؟</div>
+                                        <div class="message-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <i class="fas fa-th"></i>
+            </div>
+            <div class="user-menu">
+                <span>المدير</span>
+                <img src="assets/imgs/customer01.jpg" alt="User" class="user-avatar" style="    border-radius: 5px !important; box-shadow: 2px 4px 10px rgb(190, 189, 189);">
+                <div class="dropdown-menu">
+                
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        الإعدادات
+                    </a>
+                    <a href="index.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sidebar-menu">
+            <a href="admin.html" class="menu-item ">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>لوحه التحكم</span>
+            </a>
+                <a href="new-order.html" class="menu-item">
+                <i class="fas fa-plus-circle"></i>
+                <span>طلب جديد</span>
+            </a>
+            <a href="items.html" class="menu-item">
+                <i class="fas fa-box"></i>
+                <span>الاصناف</span>
+            </a>
+            <a href="users.html" class="menu-item active">
+                <i class="fas fa-users"></i>
+                <span>أدارة المستخدمين</span>
+            </a>
+
+            <a href="orders.html" class="menu-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>الطلبات والتحكم</span>
+            </a>
+
+
+            <a href="analytics.html" class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>التحليلات والتقارير</span>
+            </a>
+            <a href="#" class="menu-item has-submenu" id="cafetria-menu">
+                <i class="fas fa-utensils"></i>
+                <span>الكافتريا</span>
+            </a>
+            <div class="submenu" id="cafetria-submenu">
+                <a href="cafatria-staff-pages/cafateria-order-taker.html">
+                    <i class="fas fa-clipboard-list" style="color: rgba(133, 77, 186, 0.878);"></i>
+                    <span>استقبال الطلبات</span>
+                </a>
+                <a href="cafatria-staff-pages/completed-orders.html">
+                    <i class="fas fa-check-circle"  style="color: rgba(50, 142, 20, 0.744);"></i>
+                    <span>الطلبات المكتملة</span>
+                </a>
+                <a href="cafatria-staff-pages/cafeteria-cancelled-orders.html" style="width: 100%;">
+                    <i class="fas fa-times-circle" style="color: rgba(255, 0, 0, 0.744);"></i>
+                    <span>الطلبات الملغية</span>
+                </a>
+               <hr>
+            </div>
+            <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>الاعدادات</span>
+            </a>
+            <!-- <a href="change-password.html" class="menu-item">
+                <i class="fas fa-key"></i>
+                <span>كلمه المرور</span>
+            </a> -->
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل خروج</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-header">
+            <div class="header-actions">
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    اضافة مستخدم جديد
+                </button>
+                <button class="btn btn-secondary" id="printBtn">
+                    <i class="fas fa-print"></i>
+                    طباعة
+                </button>
+                <button class="btn btn-secondary" id="exportBtn">
+                    <i class="fas fa-download"></i>
+                    تصدير
+                </button>
+                <button class="btn btn-secondary" id="importBtn">
+                    <i class="fas fa-upload"></i>
+                    استيراد
+                </button>
+            </div>
+            <div class="view-controls">
+                <button class="btn btn-icon active">
+                    <i class="fas fa-list"></i>
+                </button>
+                <!-- <button class="btn btn-icon">
+                    <i class="fas fa-th-large"></i>
+                </button> -->
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th class="checkbox-cell">
+                            <input type="checkbox">
+                        </th>
+                        <th class="sortable">
+                            <span>الاسم</span>
+                            <i class="fas fa-sort"></i>
+                        </th>
+                        <th class="sortable">
+                            <span>الدور</span>
+                            <i class="fas fa-sort"></i>
+                        </th>
+                        <th class="sortable">
+                            <span>الوظيفة</span>
+                            <i class="fas fa-sort"></i>
+                        </th>
+                        <th class="sortable">
+                            <span>اسم المستخدم</span>
+                            <i class="fas fa-sort"></i>
+                        </th>
+                        <th class="sortable">
+                            <span>كلمة المرور</span>
+                            <i class="fas fa-sort"></i>
+                        </th>
+                        <th>الاجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/customer02.jpg" alt="User">
+                                <span>أحمد محمد</span>
+                            </div>
+                        </td>
+                        <td>Admin</td>
+                        <td>مدير المبيعات</td>
+                        <td>ahmed.mohamed</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/three.jpg" alt="User">
+                                <span>سارة أحمد</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>sara.ahmed</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/four.jpg" alt="User">
+                                <span>محمد علي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>مطور</td>
+                        <td>mohamed.ali</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> حسام علي</span>
+                            </div>
+                        </td>
+                        <td>Cafeteria</td>
+                        <td>مهندس</td>
+                        <td>Hossam.ali</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/three.jpg" alt="User">
+                                <span>محمد علي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>مطور</td>
+                        <td>mohamed.ali</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+           
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> كريم الدسوقي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>kareem.Eldosoky</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> كريم الدسوقي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>kareem.Eldosoky</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/customer02.jpg" alt="User">
+                                <span>أحمد محمد</span>
+                            </div>
+                        </td>
+                        <td>Admin</td>
+                        <td>مدير المبيعات</td>
+                        <td>ahmed.mohamed</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/three.jpg" alt="User">
+                                <span>سارة أحمد</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>sara.ahmed</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/four.jpg" alt="User">
+                                <span>محمد علي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>مطور</td>
+                        <td>mohamed.ali</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> حسام علي</span>
+                            </div>
+                        </td>
+                        <td>Cafeteria</td>
+                        <td>مهندس</td>
+                        <td>Hossam.ali</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/three.jpg" alt="User">
+                                <span>محمد علي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>مطور</td>
+                        <td>mohamed.ali</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+           
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> كريم الدسوقي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>kareem.Eldosoky</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> كريم الدسوقي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>kareem.Eldosoky</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                 <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> كريم الدسوقي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>kareem.Eldosoky</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="assets/imgs/five.avif" alt="User">
+                                <span> كريم الدسوقي</span>
+                            </div>
+                        </td>
+                        <td>Employee</td>
+                        <td>محاسب</td>
+                        <td>kareem.Eldosoky</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="123456" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="user-info"><img src="assets/imgs/customer02.jpg" alt="User"><span>ليلى مصطفى</span></div></td>
+                        <td>Employee</td><td>محاسب</td><td>laila.mostafa</td>
+                        <td><div class="password-cell"><input type="password" value="123456" class="password-field" readonly><i class="fas fa-eye password-toggle"></i></div></td>
+                        <td><div class="action-buttons"><button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-edit"></i></button><button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button></div></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="user-info"><img src="assets/imgs/three.jpg" alt="User"><span>سامي عبد العزيز</span></div></td>
+                        <td>Employee</td><td>مطور</td><td>sami.abdelaziz</td>
+                        <td><div class="password-cell"><input type="password" value="123456" class="password-field" readonly><i class="fas fa-eye password-toggle"></i></div></td>
+                        <td><div class="action-buttons"><button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-edit"></i></button><button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button></div></td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="user-info"><img src="assets/imgs/four.jpg" alt="User"><span>ياسمين فؤاد</span></div></td>
+                        <td>Employee</td><td>محاسب</td><td>yasmin.fouad</td>
+                        <td><div class="password-cell"><input type="password" value="123456" class="password-field" readonly><i class="fas fa-eye password-toggle"></i></div></td>
+                        <td><div class="action-buttons"><button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-edit"></i></button><button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button></div></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><div class="user-info"><img src="assets/imgs/five.avif" alt="User"><span>رامي سعيد</span></div></td>
+                        <td>Employee</td><td>مطور</td><td>ramy.saeed</td>
+                        <td><div class="password-cell"><input type="password" value="123456" class="password-field" readonly><i class="fas fa-eye password-toggle"></i></div></td>
+                        <td><div class="action-buttons"><button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-edit"></i></button><button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pagination" style="text-align:center; margin-top:20px;"></div>
+    </main>
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Print and Export buttons
+            const printBtn = document.getElementById('printBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            // Add import button and file input
+            const importBtn = document.getElementById('importBtn');
+            let importInput = document.getElementById('importInput');
+            if (!importInput) {
+                importInput = document.createElement('input');
+                importInput.type = 'file';
+                importInput.accept = '.csv';
+                importInput.style.display = 'none';
+                importInput.id = 'importInput';
+                document.body.appendChild(importInput);
+            }
+            if (importBtn) {
+                importBtn.addEventListener('click', function() {
+                    importInput.click();
+                });
+            }
+            importInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // TODO: Implement CSV import logic here
+                    alert('Selected file: ' + file.name);
+                }
+            });
+
+            // Print button event
+            if (printBtn) {
+                printBtn.addEventListener('click', function() {
+                    window.print();
+                });
+            }
+
+            // Export button event 
+            if (exportBtn) {
+                exportBtn.addEventListener('click', function() {
+                    exportTableToCSV('users_list.csv');
+                });
+            }
+
+            // Add User button functionality
+            const addUserBtn = document.querySelector('.btn.btn-primary');
+            const modal = document.getElementById('addUserModal');
+            const closeModal = document.querySelector('.close-modal');
+            const cancelBtn = document.querySelector('.btn-cancel');
+            const addUserForm = document.getElementById('addUserForm');
+
+            // Add User button click
+            if (addUserBtn) {
+                addUserBtn.addEventListener('click', () => {
+                    modal.style.display = 'block';
+                });
+            }
+
+            // Close modal functions
+            function closeModalFunc() {
+                modal.style.display = 'none';
+                addUserForm.reset();
+            }
+
+            if (closeModal) {
+                closeModal.addEventListener('click', closeModalFunc);
+            }
+
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', closeModalFunc);
+            }
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModalFunc();
+                }
+            });
+
+            // Function to export table to CSV
+            function exportTableToCSV(filename) {
+                const table = document.querySelector('.data-table');
+                let csv = [];
+                const rows = table.querySelectorAll('tr');
+                
+                for (let row of rows) {
+                    let rowData = [];
+                    // Only export visible text, skip checkboxes and buttons
+                    row.querySelectorAll('th, td').forEach(cell => {
+                        // If cell contains .user-info, get the username text
+                        const userInfo = cell.querySelector('.user-info span');
+                        if (userInfo) {
+                            rowData.push('"' + userInfo.textContent.trim() + '"');
+                        } else if (cell.classList.contains('checkbox-cell')) {
+                            // skip checkbox header
+                        } else if (cell.querySelector('input[type="checkbox"]')) {
+                            // skip checkbox cell
+                        } else if (cell.querySelector('.password-field')) {
+                            rowData.push('"' + cell.querySelector('.password-field').value + '"');
+                        } else if (cell.querySelector('.action-buttons')) {
+                            // skip action buttons
+                        } else {
+                            rowData.push('"' + cell.textContent.trim() + '"');
+                        }
+                    });
+                    if (rowData.length > 0) {
+                        csv.push(rowData.join(','));
+                    }
+                }
+
+                // Download CSV
+                const csvContent = csv.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                if (navigator.msSaveBlob) { // IE 10+
+                    navigator.msSaveBlob(blob, filename);
+                } else {
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+
+            // Handle form submission
+            if (addUserForm) {
+                addUserForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const userName = document.getElementById('userName').value;
+                    const userRoleType = document.getElementById('userRoleType').value;
+                    const userRole = document.getElementById('userRole').value;
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const userImage = document.getElementById('userImage').files[0];
+
+                    // Create new table row
+                    const tbody = document.querySelector('.data-table tbody');
+                    const newRow = document.createElement('tr');
+                    
+                    // Create image URL or use default
+                    const imageUrl = userImage ? URL.createObjectURL(userImage) : 'assets/imgs/customer01.jpg';
+
+                    newRow.innerHTML = `
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="user-info">
+                                <img src="${imageUrl}" alt="User">
+                                <span>${userName}</span>
+                            </div>
+                        </td>
+                        <td>${userRoleType}</td>
+                        <td>${userRole}</td>
+                        <td>${username}</td>
+                        <td>
+                            <div class="password-cell">
+                                <input type="password" value="${password}" class="password-field" readonly>
+                                <i class="fas fa-eye password-toggle"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete-btn" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+
+                    // Add the new row to the table
+                    tbody.insertBefore(newRow, tbody.firstChild);
+
+                    // Add password toggle functionality to the new row
+                    const newToggle = newRow.querySelector('.password-toggle');
+                    newToggle.addEventListener('click', function() {
+                        const passwordField = this.previousElementSibling;
+                        const type = passwordField.type === 'password' ? 'text' : 'password';
+                        passwordField.type = type;
+                        this.classList.toggle('fa-eye');
+                        this.classList.toggle('fa-eye-slash');
+                    });
+
+                    // Close modal and reset form
+                    closeModalFunc();
+                });
+            }
+
+            // PAGINATION LOGIC START
+            const rowsPerPage = 18;
+            let currentPage = 1;
+
+            function renderTablePage(page) {
+                const tbody = document.querySelector('.data-table tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                const totalRows = rows.length;
+                const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+                // Hide all rows
+                rows.forEach(row => row.style.display = 'none');
+
+                // Show only rows for the current page
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                rows.slice(start, end).forEach(row => row.style.display = '');
+
+                // Render pagination controls
+                renderPaginationControls(totalPages, page);
+            }
+
+            function renderPaginationControls(totalPages, currentPage) {
+                const pagination = document.getElementById('pagination');
+                pagination.innerHTML = '';
+
+                if (totalPages <= 1) return;
+
+                // Previous button (right arrow for RTL)
+                const prevBtn = document.createElement('button');
+                prevBtn.innerHTML = '<i class="fas fa-angle-right"></i>';
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.onclick = () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderTablePage(currentPage);
+                    }
+                };
+                pagination.appendChild(prevBtn);
+
+                // Page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.textContent = i;
+                    if (i === currentPage) pageBtn.style.fontWeight = 'bold';
+                    pageBtn.onclick = () => {
+                        currentPage = i;
+                        renderTablePage(currentPage);
+                    };
+                    pagination.appendChild(pageBtn);
+                }
+
+                // Next button (left arrow for RTL)
+                const nextBtn = document.createElement('button');
+                nextBtn.innerHTML = '<i class="fas fa-angle-left"></i>';
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.onclick = () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderTablePage(currentPage);
+                    }
+                };
+                pagination.appendChild(nextBtn);
+            }
+
+            // Initial render after DOM loaded
+            renderTablePage(currentPage);
+
+            // Re-render pagination when a new user is added
+            if (addUserForm) {
+                addUserForm.addEventListener('submit', () => {
+                    setTimeout(() => {
+                        const tbody = document.querySelector('.data-table tbody');
+                        const totalRows = tbody.querySelectorAll('tr').length;
+                        const totalPages = Math.ceil(totalRows / rowsPerPage);
+                        currentPage = 1; // Optionally, go to first page or last page
+                        renderTablePage(currentPage);
+                    }, 100);
+                });
+            }
+            // PAGINATION LOGIC END
+        });
+        
+    </script>
+    <script src="js/notification.js"></script>
+</body>
+</html>

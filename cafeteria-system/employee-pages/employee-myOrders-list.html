@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب جديد | Meal master</title>
+    <link rel="stylesheet" href="../styles odoo/oddo-main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles odoo/notification.css">
+    <link rel="stylesheet" href="../styles odoo/employee-myorders.css">
+    <link rel="stylesheet" href="../ChatBox/style.css">
+
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+
+
+
+     
+        <div class="header-right">
+            <div class="logo">
+                <img src="../images/logo/Meal.png" alt="Logo" style="width: 200px; height: 50px;">
+            </div>
+            <!-- <div class="search-bar">
+                <input type="text" placeholder="بحث...">
+                <i class="fas fa-search"></i>
+            </div> -->
+            <div style="display: flex;
+justify-content: center;
+align-items: center;
+gap:8px;
+margin-right: 50px;">
+      
+       <!-- animated progress start -->
+       <div class="circular-progress" data-inner-circle-color="white" data-percentage="80" data-progress-color="#602e9e" data-bg-color="black" style="background-color: #985184 !important;">
+        <div class="inner-circle"></div>
+        <p class="percentage">0%</p>
+      </div>
+        <!-- animated progress end -->
+
+       <p style="font-size: 14px; font-weight: 500;">رصيد الدعم المتبقي  : 56 جنيها</p>
+       
+</div>
+        </div>
+
+
+
+
+        <div class="header-left">
+            <a href="employee-new-order.html">
+
+               <button class="myOrders-employee-page" >طلب جديد</button> 
+            </a>
+            
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <span class="mark-all-read">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="notification-list">
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">طلب جديد</div>
+                                        <div class="notification-message">تم استلام طلب جديد من الطاولة رقم 5</div>
+                                        <div class="notification-time">منذ 5 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تنبيه مخزون</div>
+                                        <div class="notification-message">البيتزا وصلت للحد الأدنى من المخزون</div>
+                                        <div class="notification-time">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">موظف جديد</div>
+                                        <div class="notification-message">تم تسجيل موظف جديد في النظام</div>
+                                        <div class="notification-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تقرير المبيعات</div>
+                                        <div class="notification-message">تم إرسال تقرير المبيعات اليومية</div>
+                                        <div class="notification-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تحديث النظام</div>
+                                        <div class="notification-message">تم تحديث النظام بنجاح</div>
+                                        <div class="notification-time">منذ يوم</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-comments"></i>
+                    <div class="message-badge">2</div>
+                    <div class="message-dropdown">
+                        <div class="message-header">
+                            <h3>الرسائل</h3>
+                            <span class="mark-all-read-messages">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="message-list">
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">أحمد محمد</div>
+                                        <div class="message-preview">هل يمكنني طلب وجبة خاصة؟</div>
+                                        <div class="message-time">منذ 10 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">فاطمة علي</div>
+                                        <div class="message-preview">شكراً على الوجبة الممتازة</div>
+                                        <div class="message-time">منذ 30 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">محمد حسن</div>
+                                        <div class="message-preview">متى سيكون الطلب جاهز؟</div>
+                                        <div class="message-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">سارة أحمد</div>
+                                        <div class="message-preview">هل لديكم خيارات نباتية؟</div>
+                                        <div class="message-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <i class="fas fa-th"></i>
+            </div>
+            <div class="user-menu">
+                <span>الموظف</span>
+                <img src="../assets/imgs/customer01.jpg" alt="User" class="user-avatar" style="    border-radius: 5px !important; box-shadow: 2px 4px 10px rgb(190, 189, 189);">
+                <div class="dropdown-menu">
+              
+                    <a href="../index.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+     <!-- chat start -->
+     <div class="chat" style="display: none;">
+        <div class="chat-title">
+          <h1>Mohamed</h1>
+          <h2>Supah</h2>
+          <figure class="avatar">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
+        </div>
+        <div class="messages">
+          <div class="messages-content"></div>
+        </div>
+        <div class="message-box">
+          <textarea type="text" class="message-input" placeholder="اكتب شيئا...."></textarea>
+          <button type="submit" class="message-submit">ارسل</button>
+        </div>
+      
+      </div>
+      <div class="bg"></div>
+    <!-- Floating Chat Icon -->
+    <div id="floatingChatIcon" style="position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #602e9e; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
+        <i class="fas fa-comments" style="color: white; font-size: 21px;"></i>
+    </div>
+    <!-- End Floating Chat Icon -->
+    <!-- Sidebar -->
+
+    <!-- <aside class="sidebar">
+        <div class="sidebar-toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sidebar-menu">
+            <a href="admin.html" class="menu-item ">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>لوحه التحكم</span>
+            </a>
+                <a href="new-order.html" class="menu-item active">
+                <i class="fas fa-plus-circle"></i>
+                <span>طلب جديد</span>
+            </a>
+            <a href="items.html" class="menu-item">
+                <i class="fas fa-box"></i>
+                <span>الاصناف</span>
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>أدارة المستخدمين</span>
+            </a>
+
+            <a href="orders.html" class="menu-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>الطلبات والتحكم</span>
+            </a>
+
+
+            <a href="analytics.html" class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>التحليلات والتقارير</span>
+            </a>
+            <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>الاعدادات</span>
+            </a>
+          
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل خروج</span>
+            </a>
+        </div>
+    </aside> -->
+
+   
+    <main class="main-content" style="margin-right: 0px !important; padding: 0px;">
+        <!-- <div class="content-header" style="background-color: #f5f5f5;">
+            <h1>طلباتي</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary">طباعة</button>
+                <div class="view-controls">
+                    <button class="btn btn-icon active"><i class="fas fa-list"></i></button>
+                    <button class="btn btn-icon"><i class="fas fa-th-large"></i></button>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="collapsible">
+            <h2 style="margin: 0; font-size: 1rem;">الطلبات النشطة</h2>
+            <i class="fas fa-chevron-left arrow"></i>
+        </div>
+        <div class="collapsible-content">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>المشروبات</th>
+                            <th>التاريخ</th>
+                            <th>الوقت</th>
+                            <th>التكلفة</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/tea.jpg" alt="شاي" class="drink-image"><span>شاي</span></div></td>
+                            <td>2023-10-29</td>
+                            <td>09:00 ص</td>
+                            <td>100.00 جنيه</td>
+                            <td><span class="status status-pending">في الانتظار</span></td>
+                            <td class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/orange-juice.jpg" alt="عصير برتقال" class="drink-image"><span>عصير برتقال</span></div></td>
+                            <td>2023-10-29</td>
+                            <td>09:15 ص</td>
+                            <td>120.00 جنيه</td>
+                            <td><span class="status status-preparing">قيد التحضير</span></td>
+                            <td class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/pizza.jpg" alt="بيتزا" class="drink-image"><span>بيتزا</span></div></td>
+                            <td>2023-10-29</td>
+                            <td>09:30 ص</td>
+                            <td>200.00 جنيه</td>
+                            <td><span class="status status-ready">جاهز</span></td>
+                            <td class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/cola.jpg" alt="بيبسي" class="drink-image"><span>بيبسي</span></div></td>
+                            <td>2023-10-29</td>
+                            <td>09:45 ص</td>
+                            <td>50.00 جنيه</td>
+                            <td><span class="status status-cancelled">ملغي</span></td>
+                            <td class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/burger.jpg" alt="برجر" class="drink-image"><span>برجر</span></div></td>
+                            <td>2023-10-29</td>
+                            <td>10:00 ص</td>
+                            <td>180.00 جنيه</td>
+                            <td><span class="status status-delivering">جاري التوصيل</span></td>
+                            <td class="action-buttons">
+                                <button class="btn-icon edit-btn" title="تعديل"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn-icon delete-btn" title="حذف"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" style="text-align: right; font-weight: bold;">المجموع</td>
+                            <td style="font-weight: bold;">650.00 جنيه</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <h2 style="margin: 0; font-size: 1rem;">طلباتي داخل الدعم</h2>
+            <i class="fas fa-chevron-left arrow"></i>
+        </div>
+        <div class="collapsible-content">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>المشروبات</th>
+                            <th>التاريخ</th>
+                            <th>الوقت</th>
+                            <th>التكلفة</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/tea.jpg" alt="شاي" class="drink-image"><span>شاي</span></div></td>
+                            <td>2023-10-27</td>
+                            <td>10:30 ص</td>
+                            <td>150.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/tea.jpg" alt="شاي" class="drink-image"><span>شاي</span></div></td>
+                            <td>2023-10-27</td>
+                            <td>10:30 ص</td>
+                            <td>150.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/tea.jpg" alt="شاي" class="drink-image"><span>شاي</span></div></td>
+                            <td>2023-10-27</td>
+                            <td>10:30 ص</td>
+                            <td>150.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/orange-juice.jpg" alt="عصير برتقال" class="drink-image"><span>عصير برتقال</span></div></td>
+                            <td>2023-10-26</td>
+                            <td>01:15 م</td>
+                            <td>210.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/orange-juice.jpg" alt="عصير برتقال" class="drink-image"><span>عصير برتقال</span></div></td>
+                            <td>2023-10-26</td>
+                            <td>01:15 م</td>
+                            <td>210.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/orange-juice.jpg" alt="عصير برتقال" class="drink-image"><span>عصير برتقال</span></div></td>
+                            <td>2023-10-26</td>
+                            <td>01:15 م</td>
+                            <td>210.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" style="text-align: right; font-weight: bold;">المجموع</td>
+                            <td style="font-weight: bold;">525.50 جنيه</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <h2 style="margin: 0; font-size: 1rem;">طلباتي خارج الدعم</h2>
+            <i class="fas fa-chevron-left arrow"></i>
+        </div>
+        <div class="collapsible-content">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>المشروبات</th>
+                            <th>التاريخ</th>
+                            <th>الوقت</th>
+                            <th>التكلفة</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/cola.jpg" alt="بيبسي" class="drink-image"><span>بيبسي</span></div></td>
+                            <td>2023-10-28</td>
+                            <td>12:00 م</td>
+                            <td>25.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/cola.jpg" alt="بيبسي" class="drink-image"><span>بيبسي</span></div></td>
+                            <td>2023-10-28</td>
+                            <td>12:00 م</td>
+                            <td>25.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/cola.jpg" alt="بيبسي" class="drink-image"><span>بيبسي</span></div></td>
+                            <td>2023-10-28</td>
+                            <td>12:00 م</td>
+                            <td>25.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/tea.jpg" alt="شاي" class="drink-image"><span>شاي</span></div></td>
+                            <td>2023-10-28</td>
+                            <td>02:30 م</td>
+                            <td>45.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/tea.jpg" alt="شاي" class="drink-image"><span>شاي</span></div></td>
+                            <td>2023-10-28</td>
+                            <td>02:30 م</td>
+                            <td>45.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center;"><img src="../images/tea.jpg" alt="شاي" class="drink-image"><span>شاي</span></div></td>
+                            <td>2023-10-28</td>
+                            <td>02:30 م</td>
+                            <td>45.00 جنيه</td>
+                            <td><span class="status active">تم التوصيل</span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" style="text-align: right; font-weight: bold;">المجموع</td>
+                            <td style="font-weight: bold;">70.00 جنيه</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+ <script>
+    
+    const circularProgress = document.querySelectorAll(".circular-progress");
+
+Array.from(circularProgress).forEach((progressBar) => {
+  const progressValue = progressBar.querySelector(".percentage");
+  const innerCircle = progressBar.querySelector(".inner-circle");
+  let startValue = 0,
+    endValue = Number(progressBar.getAttribute("data-percentage")),
+    speed = 50,
+    progressColor = progressBar.getAttribute("data-progress-color");
+
+  const progress = setInterval(() => {
+    startValue++;
+    progressValue.textContent = `${startValue}%`;
+    progressValue.style.color = `${progressColor}`;
+
+    innerCircle.style.backgroundColor = `${progressBar.getAttribute(
+      "data-inner-circle-color"
+    )}`;
+
+    progressBar.style.background = `conic-gradient(${progressColor} ${
+      startValue * 3.6
+    }deg,${progressBar.getAttribute("data-bg-color")} 0deg)`;
+    if (startValue === endValue) {
+      clearInterval(progress);
+    }
+  }, speed);
+});
+
+</script>
+    <script src="../js/notification.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var coll = document.getElementsByClassName("collapsible");
+            for (var i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+        });
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script><script  src="./script.js"></script>
+  <script src="../ChatBox/script.js"></script>
+</body>
+
+</html>

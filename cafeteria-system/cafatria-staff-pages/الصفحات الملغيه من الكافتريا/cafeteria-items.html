@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاصناف | Meal master</title>
+    <link rel="stylesheet" href="../styles odoo/oddo-main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles odoo/notification.css">
+
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-right">
+            <div class="logo">
+                <img src="../images/logo/Meal.png" alt="Logo" style="width: 200px; height: 50px;">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="بحث...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <span class="mark-all-read">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="notification-list">
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">طلب جديد</div>
+                                        <div class="notification-message">تم استلام طلب جديد من الطاولة رقم 5</div>
+                                        <div class="notification-time">منذ 5 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تنبيه مخزون</div>
+                                        <div class="notification-message">البيتزا وصلت للحد الأدنى من المخزون</div>
+                                        <div class="notification-time">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">موظف جديد</div>
+                                        <div class="notification-message">تم تسجيل موظف جديد في النظام</div>
+                                        <div class="notification-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تقرير المبيعات</div>
+                                        <div class="notification-message">تم إرسال تقرير المبيعات اليومية</div>
+                                        <div class="notification-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تحديث النظام</div>
+                                        <div class="notification-message">تم تحديث النظام بنجاح</div>
+                                        <div class="notification-time">منذ يوم</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-comments"></i>
+                    <div class="message-badge">2</div>
+                    <div class="message-dropdown">
+                        <div class="message-header">
+                            <h3>الرسائل</h3>
+                            <span class="mark-all-read-messages">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="message-list">
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">أحمد محمد</div>
+                                        <div class="message-preview">هل يمكنني طلب وجبة خاصة؟</div>
+                                        <div class="message-time">منذ 10 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">فاطمة علي</div>
+                                        <div class="message-preview">شكراً على الوجبة الممتازة</div>
+                                        <div class="message-time">منذ 30 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">محمد حسن</div>
+                                        <div class="message-preview">متى سيكون الطلب جاهز؟</div>
+                                        <div class="message-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="../assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">سارة أحمد</div>
+                                        <div class="message-preview">هل لديكم خيارات نباتية؟</div>
+                                        <div class="message-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <i class="fas fa-th"></i>
+            </div>
+            <div class="user-menu">
+                <span>المدير</span>
+                <img src="../assets/imgs/customer01.jpg" alt="User" class="user-avatar" style="    border-radius: 5px !important; box-shadow: 2px 4px 10px rgb(190, 189, 189);">
+                <div class="dropdown-menu">
+              
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        الإعدادات
+                    </a>
+                    <a href="index.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sidebar-menu">
+            <!-- <a href="admin.html" class="menu-item ">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>لوحه التحكم</span>
+            </a> -->
+                <a href="cafeteria-new-order.html" class="menu-item">
+                <i class="fas fa-plus-circle"></i>
+                <span>طلب جديد</span>
+            </a>
+            <a href="#" class="menu-item active">
+                <i class="fas fa-box"></i>
+                <span>الاصناف</span>
+            </a>
+            <!-- <a href="users.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>أدارة المستخدمين</span>
+            </a> -->
+
+            <a href="cafateria-order-taker.html" class="menu-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>الطلبات والتحكم</span>
+            </a>
+            <a href="completed-orders.html" class="menu-item ">
+                <i class="fas fa-plus-circle"></i>
+                <span> الطلبات المكتمله</span>
+            </a>
+            <a href="cafeteria-cancelled-orders.html" class="menu-item ">
+                <i class="fas fa-times-circle"></i>
+                <span> الطلبات الملغيه</span>
+            </a>
+
+            <!-- <a href="analytics.html" class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>التحليلات والتقارير</span>
+            </a> -->
+            <!-- <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>الاعدادات</span>
+            </a> -->
+            <!-- <a href="change-password.html" class="menu-item">
+                <i class="fas fa-key"></i>
+                <span>كلمه المرور</span>
+            </a> -->
+            <a href="../index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل خروج</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- <div class="content-header">
+            <h1>الاصناف</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="openAddItemModal()">
+                    <i class="fas fa-plus"></i>
+                    إضافة صنف جديد
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-download"></i>
+                    تصدير البيانات
+                </button>
+            </div>
+        </div> -->
+
+        <!-- Filters and Search -->
+        <div class="filters-section">
+            <div class="search-filter">
+                <input type="text" placeholder="البحث في الأصناف..." class="search-input">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="food">الأطعمة</button>
+                <button class="filter-btn" data-filter="drink">المشروبات</button>
+                <button class="filter-btn" data-filter="dessert" style="margin-left: 290px;">الحلويات</button>
+                <button class="btn btn-primary" onclick="openAddItemModal()">
+                    <i class="fas fa-plus"></i>
+                    إضافة صنف جديد
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-download"></i>
+                    تصدير البيانات
+                </button>
+            </div>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="inventory-container">
+            <div class="table-responsive">
+                <table class="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>الصورة</th>
+                            <th>اسم الصنف</th>
+                            <th>النوع</th>
+                            <th>السعر</th>
+                            <th>الكمية المتوفرة</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Food Items -->
+                        <tr class="item-row" data-type="food">
+                            <td class="item-image">
+                                <img src="../images/burger.jpg" alt="برجر" class="item-img">
+                            </td>
+                            <td class="item-name">برجر لحم</td>
+                            <td class="item-type">
+                                <span class="type-badge food">طعام</span>
+                            </td>
+                            <td class="item-price">25.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">45</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="food">
+                            <td class="item-image">
+                                <img src="../images/pizza.jpg" alt="بيتزا" class="item-img">
+                            </td>
+                            <td class="item-name">بيتزا مارجريتا</td>
+                            <td class="item-type">
+                                <span class="type-badge food">طعام</span>
+                            </td>
+                            <td class="item-price">35.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">12</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="food">
+                            <td class="item-image">
+                                <img src="../images/chicken-sandwich.jpg" alt="ساندويتش دجاج" class="item-img">
+                            </td>
+                            <td class="item-name">ساندويتش دجاج مشوي</td>
+                            <td class="item-type">
+                                <span class="type-badge food">طعام</span>
+                            </td>
+                            <td class="item-price">18.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge low">3</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge low-stock">كمية قليلة</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="food">
+                            <td class="item-image">
+                                <img src="../images/caesar-salad.jpg" alt="سلطة قيصر" class="item-img">
+                            </td>
+                            <td class="item-name">سلطة قيصر</td>
+                            <td class="item-type">
+                                <span class="type-badge food">طعام</span>
+                            </td>
+                            <td class="item-price">22.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">28</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="food">
+                            <td class="item-image">
+                                <img src="../images/pasta.jpg" alt="باستا" class="item-img">
+                            </td>
+                            <td class="item-name">باستا كاربونارا</td>
+                            <td class="item-type">
+                                <span class="type-badge food">طعام</span>
+                            </td>
+                            <td class="item-price">30.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">15</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Drink Items -->
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="../images/cola.jpg" alt="كولا" class="item-img">
+                            </td>
+                            <td class="item-name">كولا</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">8.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">120</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="../images/orange-juice.jpg" alt="عصير برتقال" class="item-img">
+                            </td>
+                            <td class="item-name">عصير برتقال طازج</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">12.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">25</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="../images/iced-tea.jpg" alt="شاي مثلج" class="item-img">
+                            </td>
+                            <td class="item-name">شاي مثلج</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">10.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge low">5</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge low-stock">كمية قليلة</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="drink">
+                            <td class="item-image">
+                                <img src="../images/tea.jpg" alt="شاي" class="item-img">
+                            </td>
+                            <td class="item-name">شاي أسود</td>
+                            <td class="item-type">
+                                <span class="type-badge drink">مشروب</span>
+                            </td>
+                            <td class="item-price">6.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">80</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Dessert Items -->
+                        <tr class="item-row" data-type="dessert">
+                            <td class="item-image">
+                                <img src="../images/cheesecake.jpg" alt="تشيز كيك" class="item-img">
+                            </td>
+                            <td class="item-name">تشيز كيك</td>
+                            <td class="item-type">
+                                <span class="type-badge dessert">حلويات</span>
+                            </td>
+                            <td class="item-price">20.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge medium">18</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="dessert">
+                            <td class="item-image">
+                                <img src="../images/chocolate-cake.jpg" alt="كيك شوكولاتة" class="item-img">
+                            </td>
+                            <td class="item-name">كيك شوكولاتة</td>
+                            <td class="item-type">
+                                <span class="type-badge dessert">حلويات</span>
+                            </td>
+                            <td class="item-price">18.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge low">2</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge low-stock">كمية قليلة</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="item-row" data-type="dessert">
+                            <td class="item-image">
+                                <img src="../images/donut.jpg" alt="دونات" class="item-img">
+                            </td>
+                            <td class="item-name">دونات</td>
+                            <td class="item-type">
+                                <span class="type-badge dessert">حلويات</span>
+                            </td>
+                            <td class="item-price">8.00 جنيه</td>
+                            <td class="item-quantity">
+                                <span class="quantity-badge high">35</span>
+                            </td>
+                            <td class="item-status">
+                                <span class="status-badge available">متوفر</span>
+                            </td>
+                            <td class="item-actions">
+                                <button class="action-btn edit" title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="pagination-btn" disabled>
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+    </main>
+
+   
+    <script src="../js/notification.js"></script>
+    <script>
+        // Inventory Table Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search functionality
+            const searchInput = document.querySelector('.search-input');
+            const itemRows = document.querySelectorAll('.item-row');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                itemRows.forEach(row => {
+                    const itemName = row.querySelector('.item-name').textContent.toLowerCase();
+                    const itemType = row.querySelector('.type-badge').textContent.toLowerCase();
+                    
+                    if (itemName.includes(searchTerm) || itemType.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterType = this.getAttribute('data-filter');
+                    
+                    itemRows.forEach(row => {
+                        const itemType = row.getAttribute('data-type');
+                        
+                        if (filterType === 'all' || itemType === filterType) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Edit button functionality
+            const editButtons = document.querySelectorAll('.action-btn.edit');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const itemName = row.querySelector('.item-name').textContent;
+                    alert(`تعديل الصنف: ${itemName}`);
+                    // Here you can open a modal or navigate to edit page
+                });
+            });
+            
+            // Delete button functionality
+            const deleteButtons = document.querySelectorAll('.action-btn.delete');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const itemName = row.querySelector('.item-name').textContent;
+                    
+                    if (confirm(`هل أنت متأكد من حذف الصنف: ${itemName}؟`)) {
+                        row.style.opacity = '0.5';
+                        row.style.pointerEvents = 'none';
+                        // Here you would typically make an API call to delete the item
+                        setTimeout(() => {
+                            row.remove();
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Pagination functionality
+            const paginationButtons = document.querySelectorAll('.pagination-btn');
+            paginationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!this.disabled) {
+                        paginationButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        // Here you would typically load the corresponding page data
+                    }
+                });
+            });
+            
+            // Add new item functionality
+            window.openAddItemModal = function() {
+                alert('فتح نافذة إضافة صنف جديد');
+                // Here you can open a modal for adding new items
+            };
+            
+            // Export data functionality
+            const exportButton = document.querySelector('.btn-secondary');
+            exportButton.addEventListener('click', function() {
+                alert('تصدير بيانات الأصناف');
+                // Here you can implement export functionality (CSV, Excel, etc.)
+            });
+            
+            // Quantity status indicators
+            function updateQuantityStatus() {
+                itemRows.forEach(row => {
+                    const quantityElement = row.querySelector('.quantity-badge');
+                    const statusElement = row.querySelector('.status-badge');
+                    const quantity = parseInt(quantityElement.textContent);
+                    
+                    // Update quantity badge class
+                    quantityElement.className = 'quantity-badge';
+                    if (quantity > 20) {
+                        quantityElement.classList.add('high');
+                    } else if (quantity > 5) {
+                        quantityElement.classList.add('medium');
+                    } else {
+                        quantityElement.classList.add('low');
+                    }
+                    
+                    // Update status badge
+                    statusElement.className = 'status-badge';
+                    if (quantity === 0) {
+                        statusElement.textContent = 'نفذ المخزون';
+                        statusElement.classList.add('out-of-stock');
+                    } else if (quantity <= 5) {
+                        statusElement.textContent = 'كمية قليلة';
+                        statusElement.classList.add('low-stock');
+                    } else {
+                        statusElement.textContent = 'متوفر';
+                        statusElement.classList.add('available');
+                    }
+                });
+            }
+            
+            // Initialize quantity status
+            updateQuantityStatus();
+            
+            // Add hover effects for better UX
+            itemRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

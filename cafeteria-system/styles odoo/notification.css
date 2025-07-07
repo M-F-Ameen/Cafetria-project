@@ -1,0 +1,352 @@
+a{
+    text-decoration: none;
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-menu {
+    position: absolute;
+top: 121%;
+/* right: -112px; */
+left: -14px;
+background: white;
+border-radius: 3px;
+box-shadow: 0 2px 8px rgb(0 0 0 / 36%);
+min-width: 150px;
+display: none;
+z-index: 1000;
+border: 1px solid rgb(0 0 0 / 35%);
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 10px;
+    padding: 12px 5px;
+    color: #333;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background-color: #d4d4d4;
+}
+
+.dropdown-menu i {
+    width: 20px;
+    text-align: center;
+}
+
+.user-menu.active .dropdown-menu {
+    display: block;
+}
+
+/* Notification styles */
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 40px;
+    height: 40px; */
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.notification-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.notification-badge {
+    position: absolute;
+top: -5px;
+right: -8px;
+background-color: #ff4444;
+color: white;
+border-radius: 50%;
+width: 15px;
+height: 14px;
+font-size: 10px;
+display: flex
+;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
+    min-width: 300px;
+    max-width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+    border: 1px solid #e0e0e0;
+}
+
+.notification-header {
+    padding: 7px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.mark-all-read {
+    color: #007bff;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.notification-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.notification-item {
+    padding: 7px 12px;
+    border-bottom: 1px solid #cdcbcb;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item.unread {
+    background-color: #f0f8ff;
+}
+
+.notification-item.unread:hover {
+    background-color: #e6f3ff;
+}
+
+.notification-content {
+    display: flex
+    ;
+        align-items: flex-start;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+}
+
+.notification-icon-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #ab9353;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.notification-message {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.notification-time {
+    color: #999;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.notification-item.unread::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #007bff;
+}
+
+.notification-item {
+    position: relative;
+}
+
+.notification-icon.active .notification-dropdown {
+    display: block;
+}
+
+/* Message styles */
+.message-icon {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.message-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.message-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+    width: 15px;
+    height: 14px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.message-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
+    min-width: 320px;
+    max-width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+    border: 1px solid #e0e0e0;
+}
+
+.message-header {
+    padding: 7px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.mark-all-read-messages {
+    color: #007bff;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.message-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.message-item {
+    padding: 12px;
+    border-bottom: 1px solid #cdcbcb;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+.message-item:hover {
+    background-color: #f8f9fa;
+}
+
+.message-item.unread {
+    background-color: #f0f8ff;
+}
+
+.message-item.unread:hover {
+    background-color: #e6f3ff;
+}
+
+.message-item.unread::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #28a745;
+}
+
+.message-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.message-avatar {
+    flex-shrink: 0;
+}
+
+.message-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.message-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.message-preview {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.message-time {
+    color: #999;
+    font-size: 11px;
+}
+
+.message-icon.active .message-dropdown {
+    display: block;
+}

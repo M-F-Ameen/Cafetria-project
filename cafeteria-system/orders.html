@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الطلبات والتحكم | Meal master</title>
+    <link rel="stylesheet" href="styles odoo/oddo-main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles odoo/notification.css">
+    <link rel="stylesheet" href="styles odoo/common.css">
+   <link rel="stylesheet" href="styles odoo/orders.css">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-right">
+            <div class="logo">
+                <img src="images/logo/Meal.png" alt="Logo" style="width: 200px; height: 50px;">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="بحث...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <span class="mark-all-read">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="notification-list">
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">طلب جديد</div>
+                                        <div class="notification-message">تم استلام طلب جديد من الطاولة رقم 5</div>
+                                        <div class="notification-time">منذ 5 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تنبيه مخزون</div>
+                                        <div class="notification-message">البيتزا وصلت للحد الأدنى من المخزون</div>
+                                        <div class="notification-time">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">موظف جديد</div>
+                                        <div class="notification-message">تم تسجيل موظف جديد في النظام</div>
+                                        <div class="notification-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تقرير المبيعات</div>
+                                        <div class="notification-message">تم إرسال تقرير المبيعات اليومية</div>
+                                        <div class="notification-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تحديث النظام</div>
+                                        <div class="notification-message">تم تحديث النظام بنجاح</div>
+                                        <div class="notification-time">منذ يوم</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-comments"></i>
+                    <div class="message-badge">2</div>
+                    <div class="message-dropdown">
+                        <div class="message-header">
+                            <h3>الرسائل</h3>
+                            <span class="mark-all-read-messages">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="message-list">
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">أحمد محمد</div>
+                                        <div class="message-preview">هل يمكنني طلب وجبة خاصة؟</div>
+                                        <div class="message-time">منذ 10 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">فاطمة علي</div>
+                                        <div class="message-preview">شكراً على الوجبة الممتازة</div>
+                                        <div class="message-time">منذ 30 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">محمد حسن</div>
+                                        <div class="message-preview">متى سيكون الطلب جاهز؟</div>
+                                        <div class="message-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">سارة أحمد</div>
+                                        <div class="message-preview">هل لديكم خيارات نباتية؟</div>
+                                        <div class="message-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <i class="fas fa-th"></i>
+            </div>
+            <div class="user-menu">
+                <span>المدير</span>
+                <img src="assets/imgs/customer01.jpg" alt="User" class="user-avatar" style="    border-radius: 5px !important; box-shadow: 2px 4px 10px rgb(190, 189, 189);">
+                <div class="dropdown-menu">
+                
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        الإعدادات
+                    </a>
+                    <a href="index.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sidebar-menu">
+            <a href="admin.html" class="menu-item ">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>لوحه التحكم</span>
+            </a>
+                <a href="new-order.html" class="menu-item">
+                <i class="fas fa-plus-circle"></i>
+                <span>طلب جديد</span>
+            </a>
+            <a href="items.html" class="menu-item">
+                <i class="fas fa-box"></i>
+                <span>الاصناف</span>
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>أدارة المستخدمين</span>
+            </a>
+
+            <a href="orders.html" class="menu-item active">
+                <i class="fas fa-clipboard-list"></i>
+                <span>الطلبات والتحكم</span>
+            </a>
+
+
+            <a href="analytics.html" class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>التحليلات والتقارير</span>
+            </a>
+            <a href="#" class="menu-item has-submenu" id="cafetria-menu">
+                <i class="fas fa-utensils"></i>
+                <span>الكافتريا</span>
+            </a>
+            <div class="submenu" id="cafetria-submenu">
+                <a href="cafatria-staff-pages/cafateria-order-taker.html">
+                    <i class="fas fa-clipboard-list" style="color: rgba(133, 77, 186, 0.878);"></i>
+                    <span>استقبال الطلبات</span>
+                </a>
+                <a href="cafatria-staff-pages/completed-orders.html">
+                    <i class="fas fa-check-circle"  style="color: rgba(50, 142, 20, 0.744);"></i>
+                    <span>الطلبات المكتملة</span>
+                </a>
+                <a href="cafatria-staff-pages/cafeteria-cancelled-orders.html" style="width: 100%;">
+                    <i class="fas fa-times-circle" style="color: rgba(255, 0, 0, 0.744);"></i>
+                    <span>الطلبات الملغية</span>
+                </a>
+               <hr>
+            </div>
+            <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>الاعدادات</span>
+            </a>
+            <!-- <a href="change-password.html" class="menu-item">
+                <i class="fas fa-key"></i>
+                <span>كلمه المرور</span>
+            </a> -->
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل خروج</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- <div class="content-header">
+            <h1>الطلبات والتحكم</h1>
+        </div> -->
+        
+        <div class="orders-container">
+            <div class="orders-header">
+                <h2 style="padding-right: 30px;">جميع الطلبات</h2>
+                <div class="orders-filters">
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">جميع الحالات</option>
+                        <option value="pending">في الانتظار</option>
+                        <option value="preparing">قيد التحضير</option>
+                        <option value="ready">جاهز</option>
+                        <option value="delivered">تم التوصيل</option>
+                        <option value="cancelled">ملغي</option>
+                    </select>
+                    <input type="text" class="search-input" placeholder="بحث في الطلبات..." id="searchOrders">
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>العميل</th>
+                            <th>الطلب</th>
+                            <th>الكمية</th>
+                            <th>السعر</th>
+                            <th>الوقت</th>
+                            <th>الحالة</th>
+                            <th>ملاحظات</th>
+                            <th style="padding-right: 150px;">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>أحمد محمد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/pizza.jpg" alt="Pizza" class="order-image">
+                                    <div class="order-details">
+                                        <h4>بيتزا مارجريتا</h4>
+                                        <p>حجم كبير</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>45 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:30</div>
+                                    <div>منذ 15 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-preparing">قيد التحضير</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون جبنة إضافية</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(1)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(1)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(1)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>فاطمة علي</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/burger.jpg" alt="Burger" class="order-image">
+                                    <div class="order-details">
+                                        <h4>برجر دجاج</h4>
+                                        <p>مع بطاطس</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>25 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:15</div>
+                                    <div>منذ 30 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-ready">جاهز</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون بصل</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(2)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(2)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(2)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>محمد حسن</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/pasta.jpg" alt="Pasta" class="order-image">
+                                    <div class="order-details">
+                                        <h4>باستا كاربونارا</h4>
+                                        <p>حجم متوسط</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>35 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>13:45</div>
+                                    <div>منذ ساعة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-delivered">تم التوصيل</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">-</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(3)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(3)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(3)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>سارة أحمد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/caesar-salad.jpg" alt="Salad" class="order-image">
+                                    <div class="order-details">
+                                        <h4>سلطة قيصر</h4>
+                                        <p>مع دجاج مشوي</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>30 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:45</div>
+                                    <div>منذ 5 دقائق</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">في الانتظار</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون جبنة بارميزان</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(4)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(4)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(4)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>علي محمود</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/beef-sandwich.jpg" alt="Sandwich" class="order-image">
+                                    <div class="order-details">
+                                        <h4>ساندويتش لحم بقري</h4>
+                                        <p>مع مشروب</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>40 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>12:30</div>
+                                    <div>منذ ساعتين</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-cancelled">ملغي</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">تم الإلغاء من العميل</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(5)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(5)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(5)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>سارة أحمد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/caesar-salad.jpg" alt="Salad" class="order-image">
+                                    <div class="order-details">
+                                        <h4>سلطة قيصر</h4>
+                                        <p>مع دجاج مشوي</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>30 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:45</div>
+                                    <div>منذ 5 دقائق</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">في الانتظار</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون جبنة بارميزان</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(4)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(4)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(4)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>علي محمود</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/beef-sandwich.jpg" alt="Sandwich" class="order-image">
+                                    <div class="order-details">
+                                        <h4>ساندويتش لحم بقري</h4>
+                                        <p>مع مشروب</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>40 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>12:30</div>
+                                    <div>منذ ساعتين</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-cancelled">ملغي</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">تم الإلغاء من العميل</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(5)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(5)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(5)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>سارة أحمد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/caesar-salad.jpg" alt="Salad" class="order-image">
+                                    <div class="order-details">
+                                        <h4>سلطة قيصر</h4>
+                                        <p>مع دجاج مشوي</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>30 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:45</div>
+                                    <div>منذ 5 دقائق</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">في الانتظار</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون جبنة بارميزان</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(4)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(4)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(4)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>يوسف إبراهيم</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/cola.jpg" alt="Cola" class="order-image">
+                                    <div class="order-details">
+                                        <h4>مشروب كولا</h4>
+                                        <p>بارد</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>3</td>
+                            <td>15 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>15:00</div>
+                                    <div>منذ 3 دقائق</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-ready">جاهز</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون ثلج</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(6)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(6)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(6)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>منى خالد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/orange-juice.jpg" alt="Orange Juice" class="order-image">
+                                    <div class="order-details">
+                                        <h4>عصير برتقال</h4>
+                                        <p>طازج</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>20 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:55</div>
+                                    <div>منذ 8 دقائق</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-preparing">قيد التحضير</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">سكر قليل</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(7)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(7)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(7)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>سعيد عبد الله</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/iced-tea.jpg" alt="Iced Tea" class="order-image">
+                                    <div class="order-details">
+                                        <h4>شاي مثلج</h4>
+                                        <p>ليمون ونعناع</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>12 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:50</div>
+                                    <div>منذ 13 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">في الانتظار</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون سكر</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(8)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(8)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(8)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>هالة مصطفى</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/tea.jpg" alt="Tea" class="order-image">
+                                    <div class="order-details">
+                                        <h4>شاي ساخن</h4>
+                                        <p>مع نعناع</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>10 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:40</div>
+                                    <div>منذ 23 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-delivered">تم التوصيل</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">سكر وسط</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(9)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(9)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(9)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer01.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>رامي فؤاد</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/soda.jpg" alt="Soda" class="order-image">
+                                    <div class="order-details">
+                                        <h4>مشروب غازي</h4>
+                                        <p>نكهة ليمون</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>10 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:35</div>
+                                    <div>منذ 28 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-cancelled">ملغي</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">تم الإلغاء من الموظف</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(10)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(10)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(10)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-info">
+                                    <img src="assets/imgs/customer02.jpg" alt="Customer" class="customer-avatar">
+                                    <div class="customer-details">
+                                        <h4>داليا حسن</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="order-item">
+                                    <img src="images/chips.jpg" alt="Chips" class="order-image">
+                                    <div class="order-details">
+                                        <h4>عصير تفاح</h4>
+                                        <p>بارد</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>2</td>
+                            <td>18 جنيه</td>
+                            <td>
+                                <div class="order-time">
+                                    <div>14:20</div>
+                                    <div>منذ 43 دقيقة</div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge status-preparing">قيد التحضير</span>
+                            </td>
+                            <td>
+                                <div class="order-comments">بدون سكر</div>
+                            </td>
+                            <td>
+                                <div class="order-actions">
+                                    <button class="action-btn edit-btn" onclick="editOrder(11)">
+                                        <i class="fas fa-edit"></i>
+                                        تعديل
+                                    </button>
+                                    <button class="action-btn comment-btn" onclick="addComment(11)">
+                                        <i class="fas fa-comment"></i>
+                                        ملاحظة
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteOrder(11)">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Comment Modal -->
+        <div class="comment-modal" id="commentModal">
+            <div class="comment-modal-content">
+                <h3>إضافة ملاحظة للطلب</h3>
+                <textarea class="comment-textarea" id="commentText" placeholder="اكتب ملاحظتك هنا..."></textarea>
+                <div class="comment-modal-actions">
+                    <button class="modal-btn cancel-btn" onclick="closeCommentModal()">إلغاء</button>
+                    <button class="modal-btn save-btn" onclick="saveComment()">حفظ</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript for Orders Management -->
+  
+    <script src="js/orders.js"></script>
+ 
+       <script src="js/notification.js"></script>
+</body>
+</html> 

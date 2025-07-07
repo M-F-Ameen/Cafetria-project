@@ -1,0 +1,172 @@
+a{
+    text-decoration: none;
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-menu {
+    position: absolute;
+top: 121%;
+/* right: -112px; */
+left: -14px;
+background: white;
+border-radius: 3px;
+box-shadow: 0 2px 8px rgb(0 0 0 / 36%);
+min-width: 150px;
+display: none;
+z-index: 1000;
+border: 1px solid rgb(0 0 0 / 35%);
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 10px;
+    padding: 12px 5px;
+    color: #333;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background-color: #d4d4d4;
+}
+
+.dropdown-menu i {
+    width: 20px;
+    text-align: center;
+}
+
+.user-menu.active .dropdown-menu {
+    display: block;
+}
+
+.password-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.password-toggle {
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s;
+}
+
+.password-toggle:hover {
+    color: #333;
+}
+
+.password-field {
+    border: none;
+    background: none;
+    width: 80px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 20px;
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 160px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.modal-footer {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.btn-save {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-save:hover {
+    background-color: #357abd;
+}
+
+.btn-cancel {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.btn-cancel:hover {
+    background-color: #e5e5e5;
+}

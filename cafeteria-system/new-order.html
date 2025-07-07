@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب جديد | Meal master</title>
+    <link rel="stylesheet" href="styles odoo/oddo-main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles odoo/notification.css">
+    <link rel="stylesheet" href="styles odoo/common.css">
+    <link rel="stylesheet" href="styles odoo/new-order.css">
+    <link rel="stylesheet" href="../ChatBox/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-right">
+            <div class="logo">
+                <img src="images/logo/Meal.png" alt="Logo" style="width: 200px; height: 50px;">
+            </div>
+          
+        </div>
+        <div class="header-left">
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <span class="mark-all-read">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="notification-list">
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">طلب جديد</div>
+                                        <div class="notification-message">تم استلام طلب جديد من الطاولة رقم 5</div>
+                                        <div class="notification-time">منذ 5 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تنبيه مخزون</div>
+                                        <div class="notification-message">البيتزا وصلت للحد الأدنى من المخزون</div>
+                                        <div class="notification-time">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item unread">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">موظف جديد</div>
+                                        <div class="notification-message">تم تسجيل موظف جديد في النظام</div>
+                                        <div class="notification-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تقرير المبيعات</div>
+                                        <div class="notification-message">تم إرسال تقرير المبيعات اليومية</div>
+                                        <div class="notification-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <div class="notification-content">
+                                    <div class="notification-icon-small">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="notification-text">
+                                        <div class="notification-title">تحديث النظام</div>
+                                        <div class="notification-message">تم تحديث النظام بنجاح</div>
+                                        <div class="notification-time">منذ يوم</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-comments"></i>
+                    <div class="message-badge">2</div>
+                    <div class="message-dropdown">
+                        <div class="message-header">
+                            <h3>الرسائل</h3>
+                            <span class="mark-all-read-messages">تحديد الكل كمقروء</span>
+                        </div>
+                        <ul class="message-list">
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">أحمد محمد</div>
+                                        <div class="message-preview">هل يمكنني طلب وجبة خاصة؟</div>
+                                        <div class="message-time">منذ 10 دقائق</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item unread">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">فاطمة علي</div>
+                                        <div class="message-preview">شكراً على الوجبة الممتازة</div>
+                                        <div class="message-time">منذ 30 دقيقة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer02.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">محمد حسن</div>
+                                        <div class="message-preview">متى سيكون الطلب جاهز؟</div>
+                                        <div class="message-time">منذ ساعة</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="message-item">
+                                <div class="message-content">
+                                    <div class="message-avatar">
+                                        <img src="assets/imgs/customer01.jpg" alt="User" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    </div>
+                                    <div class="message-text">
+                                        <div class="message-title">سارة أحمد</div>
+                                        <div class="message-preview">هل لديكم خيارات نباتية؟</div>
+                                        <div class="message-time">منذ 3 ساعات</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <i class="fas fa-th"></i>
+            </div>
+            <div class="user-menu">
+                <span>المدير</span>
+                <img src="assets/imgs/customer01.jpg" alt="User" class="user-avatar" style="    border-radius: 5px !important; box-shadow: 2px 4px 10px rgb(190, 189, 189);">
+                <div class="dropdown-menu">
+               
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        الإعدادات
+                    </a>
+                    <a href="index.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+  <!-- chat start -->
+  <div class="chat" style="display: none; z-index: 135346;">
+    <div class="chat-title">
+      <h1>Mohamed</h1>
+      <h2>Supah</h2>
+      <figure class="avatar">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
+    </div>
+    <div class="messages">
+      <div class="messages-content"></div>
+    </div>
+    <div class="message-box">
+      <textarea type="text" class="message-input" placeholder="اكتب شيئا...."></textarea>
+      <button type="submit" class="message-submit">ارسل</button>
+    </div>
+  
+  </div>
+  <div class="bg"></div>
+<!-- Floating Chat Icon -->
+<div id="floatingChatIcon" style="position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #602e9e; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
+    <i class="fas fa-comments" style="color: white; font-size: 21px;"></i>
+</div>
+<!-- End Floating Chat Icon -->
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sidebar-menu">
+            <a href="admin.html" class="menu-item ">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>لوحه التحكم</span>
+            </a>
+                <a href="new-order.html" class="menu-item active">
+                <i class="fas fa-plus-circle"></i>
+                <span>طلب جديد</span>
+            </a>
+            <a href="items.html" class="menu-item">
+                <i class="fas fa-box"></i>
+                <span>الاصناف</span>
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>أدارة المستخدمين</span>
+            </a>
+
+            <a href="orders.html" class="menu-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>الطلبات والتحكم</span>
+            </a>
+
+
+            <a href="analytics.html" class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>التحليلات والتقارير</span>
+            </a>
+            <a href="#" class="menu-item has-submenu" id="cafetria-menu">
+                <i class="fas fa-utensils"></i>
+                <span>الكافتريا</span>
+            </a>
+            <div class="submenu" id="cafetria-submenu">
+                <a href="cafatria-staff-pages/cafateria-order-taker.html">
+                    <i class="fas fa-clipboard-list" style="color: rgba(133, 77, 186, 0.878);"></i>
+                    <span>استقبال الطلبات</span>
+                </a>
+                <a href="cafatria-staff-pages/completed-orders.html">
+                    <i class="fas fa-check-circle"  style="color: rgba(50, 142, 20, 0.744);"></i>
+                    <span>الطلبات المكتملة</span>
+                </a>
+                <a href="cafatria-staff-pages/cafeteria-cancelled-orders.html" style="width: 100%;">
+                    <i class="fas fa-times-circle" style="color: rgba(255, 0, 0, 0.744);"></i>
+                    <span>الطلبات الملغية</span>
+                </a>
+               <hr>
+            </div>
+            <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>الاعدادات</span>
+            </a>
+            <!-- <a href="change-password.html" class="menu-item">
+                <i class="fas fa-key"></i>
+                <span>كلمه المرور</span>
+            </a> -->
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل خروج</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content - POS Interface -->
+    <main class="main-content">
+        <div class="pos-container">
+            <!-- Left Side - Products -->
+            <div class="pos-left">
+                <div class="pos-header" style="margin-top: -15px;">
+                    <!-- <h2 style="padding-right: 30px;">نقطة البيع</h2> -->
+                    <div class="pos-search">
+                        <input type="text" id="productSearch" placeholder="البحث عن المنتجات...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                
+                <div class="category-tabs">
+                    <button class="category-tab active" data-category="drinks">مشروبات</button>
+                    <button class="category-tab" data-category="others">اخري</button>
+                </div>
+                
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Right Side - Cart -->
+            <div class="pos-right">
+                <div class="cart-header">
+                    <h3>سلة المشتريات</h3>
+                </div>
+                
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be displayed here -->
+                </div>
+                
+                <div class="cart-footer">
+                    <div class="cart-total">
+                        <span class="total-label">المجموع:</span>
+                        <span class="total-amount" id="totalAmount">0.00 جنيه</span>
+                    </div>
+                    
+                    <div class="payment-buttons">
+                        <button class="payment-btn cash" id="cashPayment" disabled>
+                            <i class="fas fa-money-bill-wave"></i> طلب
+                        </button>
+                        <button class="payment-btn card" id="cardPayment" disabled>
+                            طلب ضيافة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+ 
+
+    <script src="js/notification.js"></script>
+    <script src="js/new-order.js"></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script><script  src="./script.js">  
+ </script> 
+<script src="../ChatBox/script.js"></script>
+</body>
+
+</html>

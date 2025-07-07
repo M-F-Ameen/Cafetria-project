@@ -1,0 +1,145 @@
+
+
+body{
+    background-color: #f9fafb;
+}
+.analytics-container {
+    padding: 0px;
+}
+
+.section-header {
+    background-color: #ffffff;
+    padding: 7px 11px;
+    border: 1px solid #0095df00;
+    border-radius: 0px;
+    /* margin-bottom: 8px; */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #0000002e;
+}
+
+.section-header:hover {
+    background-color: #e9ecef;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #141212;
+    font-weight: 400;
+}
+
+.section-header .fa-caret-left {
+    transition: transform 0.3s ease;
+}
+
+.section-header.active .fa-caret-left {
+    transform: rotate(-90deg);
+}
+
+.section-content {
+    display: none;
+padding: 0px;
+border: 1px solid #d1d5d9;
+border-radius: 0px;
+margin-bottom: -1px;
+}
+
+.section-content.active {
+    display: block;
+}
+
+.analytics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0px;
+    background-color: white;
+}
+
+.analytics-table th,
+.analytics-table td {
+    padding: 3px;
+    text-align: right;
+    border-bottom: 1px solid #b7bbbf;
+    padding-right: 9px;
+    font-size: 14px;
+    color: #575555;
+}
+
+.analytics-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #1c1c1c;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.analytics-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.section-header .toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.section-header.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.status-badge {
+    padding: 2px 10px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+}
+.status-complete {
+    background: #28a745;
+}
+.status-pending {
+    background: #fd7e14;
+}
+.status-cancelled {
+    background: #dc3545;
+}
+.status-waiting {
+    background: #6c757d;
+}
+.status-preparing {
+    background: #fd7e14;
+}
+.status-ready {
+    background: #007bff;
+}
+.status-delivering {
+    background: #8051a3;
+}
+.status-delivered {
+    background: #28a745;
+}
+
+
+.sidebar-toggle {
+position: absolute;
+left: 22px;
+top: 7px;
+width: 20px;
+height: 20px;
+background-color: #bdbaba;
+border-radius: 50%;
+display: flex
+;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+box-shadow: -1px 0 3px rgba(0, 0, 0, 0.1);
+z-index: 901;
+}
+td img {
+margin-right: 20px;
+}
